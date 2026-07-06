@@ -39,7 +39,10 @@ Gmail; the script only reads message headers (From/To/Subject) and moves labels 
 4. Replace `Code.gs` with [`src/Config.js`](src/Config.js), then add a file (＋ → Script) for each of
    [`Setup.js`](src/Setup.js), [`Screener.js`](src/Screener.js), [`Digest.js`](src/Digest.js) and
    [`WebApp.js`](src/WebApp.js), pasting in their contents. (File names don't matter, only content.)
-5. In the toolbar, select the function `setup` and click **Run**. Google will ask you to authorize:
+5. Save every file (`⌘S`/`Ctrl+S`), then click on the file you pasted `Setup.js` into — the
+   function dropdown in the toolbar only lists functions from the file that's currently open, and
+   only after it's saved. Select `setup` in that dropdown and click **Run**. Google will ask you
+   to authorize:
    - Because this is your own unverified script, you'll see a **"Google hasn't verified this app"**
      warning. Click **Advanced → Go to Gmail Screener (unsafe)**. "Unsafe" here means "Google didn't
      audit it" — the code is this repo, running under your account, visible to no one else.
