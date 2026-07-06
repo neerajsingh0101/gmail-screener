@@ -120,7 +120,9 @@ function renderDashboard(notice) {
       : '<table>' + pendingRows + '</table>') +
     '<h2>Exemptions</h2>' +
     '<p class="muted">Mail matching any of these is delivered straight to your inbox — no screening. ' +
-    'The sender is not approved by it, and an explicit rejection still wins.</p>' +
+    'The sender is not approved by it, and an explicit rejection still wins: if you have rejected ' +
+    'someone and they send an email containing one of your exemption keywords in the subject, it ' +
+    'will not be delivered — an explicit rejection always wins.</p>' +
     exemptionBlock(url, 'domains', 'Domains', 'Any address at these domains (subdomains included).', 'github.com') +
     exemptionBlock(url, 'emails', 'Email addresses', 'Specific senders, always delivered.', 'noreply@stripe.com') +
     exemptionBlock(url, 'keywords', 'Subject keywords', 'Delivered when the subject contains the phrase (case-insensitive).', 'login code') +

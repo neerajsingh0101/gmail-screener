@@ -125,7 +125,9 @@ Three deliberate design decisions worth knowing:
    unapproved — their next ordinary email is still screened. That's what you want for `noreply@`
    senders that send one login code and then start sending marketing.
 2. **An explicit 👎 always beats an exemption.** If you rejected someone at an exempted domain,
-   they stay rejected.
+   they stay rejected. Same for keywords: if a person you explicitly rejected sends an email
+   containing one of your exemption keywords, it will not be delivered — an explicit rejection
+   always wins.
 3. **Exemptions apply retroactively.** Adding `github.com` while twelve GitHub emails sit in
    `@Screener/Pending` immediately releases all twelve to your inbox (`rescreenPending()`
    re-checks everything held and reports the count in the dashboard notice).
