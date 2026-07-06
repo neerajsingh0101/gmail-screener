@@ -98,11 +98,6 @@ need to copy.
 
 That's it. Screening starts immediately: new senders pile up in `@Screener/Pending`, your digest
 arrives daily at 8am (change `DIGEST_HOUR` in `Config.js`), and the dashboard is at the web app URL.
-
-Prefer the command line? With [clasp](https://github.com/google/clasp):
-`npm i -g @google/clasp && clasp login && clasp create --type standalone --title "Gmail Screener" --rootDir src && clasp push`,
-then do steps 5–6 in the editor (`clasp open`).
-
 ## Daily use
 
 - **Digest email** — arrives only on days something is pending. 👍 delivers all held mail from that
