@@ -12,6 +12,7 @@ function setup() {
   const labelIds = ensureLabels();
   ensureFilter(labelIds.triage);
   ensureTriggers();
+  ensureDefaultExemptions();
   setConfig('lastSentScan', String(Math.floor(Date.now() / 1000)));
 
   Logger.log('Gmail Screener installed for %s.', self);
@@ -66,6 +67,16 @@ function ensureFilter(triageLabelId) {
     'me'
   );
   setConfig('filterId', created.id);
+}
+
+// Seeds each exemption list on first install only — a list the user has
+// touched (even emptied) is never overwritten.
+function ensureDefaultExemptions() {
+  EXEMPTION_TYPES.forEach(function (type) {
+    if (props().getProperty('x:' + type) === null) {
+      saveExemptions(type, DEFAULT_EXEMPTIONS[type]);
+    }
+  });
 }
 
 function ensureTriggers() {

@@ -119,6 +119,10 @@ Three lists (managed from the dashboard) let mail bypass screening entirely:
   email is delivered no matter who sent it. `login code`, `OTP`, `password` and `verification`
   cover most sign-in, sign-up and password-reset flows.
 
+New installs start pre-seeded with a few defaults — domains `github.com` and `stripe.com`, address
+`notifications@github.com`, keywords `logincode` and `otp`. Remove any of them from the dashboard;
+`setup()` never re-adds entries you've removed.
+
 Three deliberate design decisions worth knowing:
 
 1. **Exemption ≠ approval.** A keyword-exempted OTP email is delivered, but its sender stays

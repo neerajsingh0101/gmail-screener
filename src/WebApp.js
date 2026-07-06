@@ -98,6 +98,7 @@ function renderDashboard(notice) {
     '<style>' +
     'body{font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;max-width:720px;margin:24px auto;padding:0 16px;color:#202124}' +
     'h1{font-size:22px}h2{font-size:16px;margin-top:32px}h3{font-size:14px;margin:20px 0 6px}' +
+    '.exemptions-title{font-size:21px}' +
     'table{border-collapse:collapse;width:100%}td{padding:10px 8px;border-bottom:1px solid #eee;vertical-align:top}' +
     '.muted{color:#5f6368;font-size:13px}' +
     '.actions{white-space:nowrap;text-align:right}' +
@@ -118,14 +119,14 @@ function renderDashboard(notice) {
     (senders.length === 0
       ? '<p class="muted">Nothing pending. Enjoy the quiet inbox.</p>'
       : '<table>' + pendingRows + '</table>') +
-    '<h2>Exemptions</h2>' +
+    '<h2 class="exemptions-title">Exemptions</h2>' +
     '<p class="muted">Mail matching any of these is delivered straight to your inbox — no screening. ' +
     'The sender is not approved by it, and an explicit rejection still wins: if you have rejected ' +
     'someone and they send an email containing one of your exemption keywords in the subject, it ' +
     'will not be delivered — an explicit rejection always wins.</p>' +
-    exemptionBlock(url, 'domains', 'Domains', 'Any address at these domains (subdomains included).', 'github.com') +
-    exemptionBlock(url, 'emails', 'Email addresses', 'Specific senders, always delivered.', 'noreply@stripe.com') +
-    exemptionBlock(url, 'keywords', 'Subject keywords', 'Delivered when the subject contains the phrase (case-insensitive).', 'login code') +
+    exemptionBlock(url, 'domains', 'Exemption Domains', 'Any address at these domains (subdomains included).', 'github.com') +
+    exemptionBlock(url, 'emails', 'Exemption Email Addresses', 'Specific senders, always delivered.', 'noreply@stripe.com') +
+    exemptionBlock(url, 'keywords', 'Exemption Keywords', 'Delivered when the subject contains the phrase (case-insensitive).', 'login code') +
     '<h2>Approved senders (' + verdicts.approved.length + ')</h2>' +
     '<ul>' + verdictList(verdicts.approved) + '</ul>' +
     '<h2>Rejected senders (' + verdicts.rejected.length + ')</h2>' +
@@ -136,21 +137,18 @@ function renderDashboard(notice) {
 
 function exemptionBlock(url, type, title, hint, placeholder) {
   const values = getExemptions(type);
-  const chips =
-    values.length === 0
-      ? '<span class="muted">none yet</span>'
-      : values
-          .map(function (value) {
-            return (
-              '<span class="chip">' + escapeHtml(value) +
-              '<a href="' + exemptionUrl(url, 'remove-exemption', type, value) + '" title="Remove">&times;</a>' +
-              '</span>'
-            );
-          })
-          .join('');
+  const chips = values
+    .map(function (value) {
+      return (
+        '<span class="chip">' + escapeHtml(value) +
+        '<a href="' + exemptionUrl(url, 'remove-exemption', type, value) + '" title="Remove">&times;</a>' +
+        '</span>'
+      );
+    })
+    .join('');
 
   return (
-    '<h3>' + title + ' (' + values.length + ')</h3>' +
+    '<h3>' + title + '</h3>' +
     '<p class="muted">' + hint + '</p>' +
     '<div class="chips">' + chips + '</div>' +
     '<form class="add" method="get" action="' + url + '">' +

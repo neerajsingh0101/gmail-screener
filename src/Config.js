@@ -150,6 +150,13 @@ function escapeHtml(text) {
 
 const EXEMPTION_TYPES = ['domains', 'emails', 'keywords'];
 
+// Seeded once by setup() on first install; freely removable from the dashboard.
+const DEFAULT_EXEMPTIONS = {
+  domains: ['github.com', 'stripe.com'],
+  emails: ['notifications@github.com'],
+  keywords: ['logincode', 'otp'],
+};
+
 function getExemptions(type) {
   return JSON.parse(props().getProperty('x:' + type) || '[]');
 }
