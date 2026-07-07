@@ -81,7 +81,7 @@ function buildSenderCard(email) {
 function changeLinkParagraph() {
   const url = webAppUrl();
   const text = url
-    ? 'If you want to change it, <a href="' + url + '">click here</a>.'
+    ? 'If you want to change it, <a href="' + url + '">click here</a>'
     : 'You can change this on the dashboard (deploy the web app to enable the link).';
   return CardService.newTextParagraph().setText(text);
 }
