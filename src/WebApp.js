@@ -100,7 +100,7 @@ function renderDashboard(notice) {
       .map(function (email) {
         return (
           '<li>' + escapeHtml(email) +
-          ' <a class="undo" href="' + actionUrl(url, 'clear', email) + '">undo</a></li>'
+          ' <a class="undo" href="' + actionUrl(url, 'clear', email) + '">Delete</a></li>'
         );
       })
       .join('');
