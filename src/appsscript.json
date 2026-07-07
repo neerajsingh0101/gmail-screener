@@ -21,7 +21,7 @@
   "addOns": {
     "common": {
       "name": "Gmail Screener",
-      "logoUrl": "https://www.gstatic.com/images/icons/material/system/1x/mail_googblue_48dp.png"
+      "logoUrl": "https://raw.githubusercontent.com/neerajsingh0101/gmail-screener/main/assets/icon.png"
     },
     "gmail": {
       "homepageTrigger": {
