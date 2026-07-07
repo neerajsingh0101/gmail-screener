@@ -72,7 +72,8 @@ function renderDashboard(notice) {
     .map(function (sender) {
       return (
         '<tr>' +
-        '<td><strong>' + escapeHtml(sender.name) + '</strong><br>' +
+        '<td><a class="sender" target="_blank" rel="noopener" href="' + gmailSearchUrl(sender.email) + '">' +
+        '<strong>' + escapeHtml(sender.name) + '</strong></a><br>' +
         '<span class="muted">' + escapeHtml(sender.email) + ' &middot; ' + sender.count + ' held &middot; ' +
         escapeHtml(sender.latestSubject) + '</span></td>' +
         '<td class="actions">' +
@@ -108,6 +109,7 @@ function renderDashboard(notice) {
     '.btn{display:inline-block;padding:6px 14px;border-radius:6px;text-decoration:none;color:#fff;font-size:13px}' +
     '.approve{background:#1e8e3e}.reject{background:#d93025}' +
     '.notice{background:#e6f4ea;border:1px solid #1e8e3e;border-radius:6px;padding:10px 14px;margin:16px 0}' +
+    '.sender{color:#202124;text-decoration:none}.sender:hover strong{text-decoration:underline}' +
     'ul{padding-left:20px}li{margin:4px 0}' +
     '.undo{color:#5f6368;font-size:12px;margin-left:6px}' +
     '.chips{margin:4px 0 8px}' +
@@ -121,15 +123,16 @@ function renderDashboard(notice) {
     '<h2>Awaiting review (' + senders.length + ')</h2>' +
     (senders.length === 0
       ? '<p class="muted">Nothing pending. Enjoy the quiet inbox.</p>'
-      : '<table>' + pendingRows + '</table>') +
+      : '<p class="muted">Click a sender&#39;s name to read their held mail in Gmail.</p>' +
+        '<table>' + pendingRows + '</table>') +
     '<h2 class="exemptions-title">Exemptions</h2>' +
     '<p class="muted">Mail matching any of these is delivered straight to your inbox — no screening. ' +
     'The sender is not approved by it, and an explicit rejection still wins: if you have rejected ' +
     'someone and they send an email containing one of your exemption keywords in the subject, it ' +
     'will not be delivered — an explicit rejection always wins.</p>' +
-    exemptionBlock(url, 'domains', 'Exemption Domains', 'Any address at these domains (subdomains included).', 'github.com') +
-    exemptionBlock(url, 'emails', 'Exemption Email Addresses', 'Specific senders, always delivered.', 'noreply@stripe.com') +
-    exemptionBlock(url, 'keywords', 'Exemption Keywords', 'Delivered when the subject contains the phrase (case-insensitive).', 'login code') +
+    exemptionBlock(url, 'domains', 'Exemption Domains', 'Any email address from these domains will not be held for screening and will be delivered to your inbox.', 'github.com') +
+    exemptionBlock(url, 'emails', 'Exemption Email Addresses', 'Emails from these specific email addresses will not be held for screening and will be delivered to your inbox.', 'noreply@stripe.com') +
+    exemptionBlock(url, 'keywords', 'Exemption Keywords', 'Emails with subjects containing any of these keywords will skip screening and be delivered directly to your inbox. Keyword matching is case-insensitive.', 'login code') +
     '<h2>Approved senders (' + verdicts.approved.length + ')</h2>' +
     '<ul>' + verdictList(verdicts.approved) + '</ul>' +
     '<h2>Rejected senders (' + verdicts.rejected.length + ')</h2>' +
@@ -165,4 +168,8 @@ function exemptionBlock(url, type, title, hint, placeholder) {
 
 function exemptionUrl(base, action, type, value) {
   return base + '?action=' + action + '&type=' + type + '&value=' + encodeURIComponent(value);
+}
+
+function gmailSearchUrl(email) {
+  return 'https://mail.google.com/mail/u/0/#search/' + encodeURIComponent('from:' + email);
 }

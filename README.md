@@ -79,24 +79,31 @@ need to copy.
 34. Paste in the contents of
     [`WebApp.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gmail-screener/main/src/WebApp.js).
 35. Save (`⌘S`/`Ctrl+S`).
-36. Click `Setup.gs` in the Files list. (The toolbar's function dropdown only lists functions
+36. Click the **＋** next to "Files".
+37. Choose **Script**.
+38. Type `AddOn` as the name — no extension.
+39. Paste in the contents of
+    [`AddOn.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gmail-screener/main/src/AddOn.js).
+40. Save (`⌘S`/`Ctrl+S`).
+41. Click `Setup.gs` in the Files list. (The toolbar's function dropdown only lists functions
     from the file that's currently open — and only once it's saved.)
-37. In the toolbar, open the function dropdown (next to **Debug**), choose **`setup`**, and click
+42. In the toolbar, open the function dropdown (next to **Debug**), choose **`setup`**, and click
     **Run**.
-38. Authorize when asked. You'll see **"Google hasn't verified this app"** — click
+43. Authorize when asked. You'll see **"Google hasn't verified this app"** — click
     **Advanced → Go to Gmail Screener (unsafe)**. "Unsafe" only means Google didn't audit it: the
     code is this repo, running under your own account, visible to no one else.
-39. Grant the Gmail permissions. The script asks for the minimum it needs: modify labels
-    (`gmail.modify`), manage filters (`gmail.settings.basic`), and manage its own triggers.
-40. Click **Deploy** (top right).
-41. Click **New deployment**.
-42. Click the gear next to "Select type" and choose **Web app**.
-43. In the **Description** box, type `Gmail Screener dashboard`. (It's just a label for this
+44. Grant the Gmail permissions. The script asks for the minimum it needs: modify labels
+    (`gmail.modify`), manage filters (`gmail.settings.basic`), manage its own triggers, and run
+    as a Gmail add-on (the [side panel](#the-gmail-side-panel-optional)).
+45. Click **Deploy** (top right).
+46. Click **New deployment**.
+47. Click the gear next to "Select type" and choose **Web app**.
+48. In the **Description** box, type `Gmail Screener dashboard`. (It's just a label for this
     deployment — it has no effect on behavior.)
-44. *Execute as:* should already show **Me (your email)** — leave it.
-45. Set *Who has access:* to **Only myself**.
-46. Click **Deploy**.
-47. Copy the web app URL and bookmark it — that's your screening dashboard, and the digest's
+49. *Execute as:* should already show **Me (your email)** — leave it.
+50. Set *Who has access:* to **Only myself**.
+51. Click **Deploy**.
+52. Copy the web app URL and bookmark it — that's your screening dashboard, and the digest's
     👍/👎 buttons go through it too.
 
 That's it. Screening starts immediately: new senders pile up in `@Screener/Pending`, your digest
@@ -128,9 +135,32 @@ When code in this repo changes and you want it on your install:
   sender to your inbox and approves them forever; 👎 moves their mail to `@Screener/Rejected` and
   blocks them forever.
 - **Dashboard** (web app URL) — same buttons, any time, plus the Exemptions section and your
-  approved/rejected lists with per-sender undo.
+  approved/rejected lists with per-sender undo. Each pending sender's name links to their held
+  mail in Gmail so you can read before deciding.
+- **Gmail side panel** — read a held email in Gmail and approve/reject its sender right next to
+  it; see [The Gmail side panel](#the-gmail-side-panel-optional).
 - **From the editor** — `approveSender('a@b.com')`, `rejectSender('a@b.com')`,
   `addExemption('keywords', 'login code')`, or re-run `setup()` to repair labels/filter/triggers.
+
+## The Gmail side panel (optional)
+
+The fastest workflow is deciding while reading: open a held email in Gmail and the **Gmail
+Screener card** in the right-hand side panel shows the sender's status with the same 👍 Approve /
+👎 Reject buttons. Opening the add-on with no email selected shows a home card listing everyone
+awaiting review. It works in the Gmail mobile apps too.
+
+(Buttons can't be injected into the email body itself — Gmail messages are immutable once
+delivered — so a side-panel card is as close as Gmail allows.)
+
+To enable it, after all files (including `appsscript.json` and `AddOn`) are in place and
+`setup()` has been run:
+
+1. Click **Deploy** (top right).
+2. Click **Test deployments**.
+3. In the dialog, click **Install**, then **Done**.
+4. Reload your Gmail tab.
+5. Open any email and click the **Gmail Screener icon** in the right-hand side panel.
+6. The first time only: click **Authorize access** in the panel and approve.
 
 ## Exemptions
 

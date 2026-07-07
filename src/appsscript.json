@@ -14,8 +14,27 @@
   "oauthScopes": [
     "https://www.googleapis.com/auth/gmail.modify",
     "https://www.googleapis.com/auth/gmail.settings.basic",
-    "https://www.googleapis.com/auth/script.scriptapp"
+    "https://www.googleapis.com/auth/script.scriptapp",
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/gmail.addons.current.message.metadata"
   ],
+  "addOns": {
+    "common": {
+      "name": "Gmail Screener",
+      "logoUrl": "https://www.gstatic.com/images/icons/material/system/1x/mail_googblue_48dp.png"
+    },
+    "gmail": {
+      "homepageTrigger": {
+        "runFunction": "onAddOnHomepage"
+      },
+      "contextualTriggers": [
+        {
+          "unconditional": {},
+          "onTriggerFunction": "onGmailMessageOpen"
+        }
+      ]
+    }
+  },
   "webapp": {
     "executeAs": "USER_DEPLOYING",
     "access": "MYSELF"
