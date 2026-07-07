@@ -3,6 +3,15 @@
 // here too, and the Exemptions section is managed from this page.
 
 function doGet(e) {
+  // While actually serving the web app, getUrl() is trustworthy — remember
+  // the real dashboard URL for the digest and side-panel links.
+  try {
+    const servedUrl = ScriptApp.getService().getUrl();
+    if (servedUrl) setConfig('dashboardUrl', servedUrl);
+  } catch (err) {
+    // Non-fatal: links fall back to getUrl() until a dashboard visit succeeds.
+  }
+
   const params = (e && e.parameter) || {};
   let notice = '';
 

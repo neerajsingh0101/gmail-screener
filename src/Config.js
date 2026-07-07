@@ -118,6 +118,11 @@ function batchMove(ids, addLabelIds, removeLabelIds) {
 }
 
 function webAppUrl() {
+  // Prefer the URL the dashboard stored about itself: getUrl() outside a web
+  // app request can return the wrong deployment (e.g. the add-on's), which
+  // 404s. doGet() persists the real /exec URL on every dashboard visit.
+  const stored = getConfig('dashboardUrl');
+  if (stored) return stored;
   try {
     return ScriptApp.getService().getUrl(); // null until the web app is deployed
   } catch (e) {

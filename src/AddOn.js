@@ -49,41 +49,34 @@ function onAddOnHomepage() {
   return builder.addSection(section).build();
 }
 
-// One clean card per state: after a verdict the card shows only the bold
-// status headline and a link to the dashboard listing where it can be
-// changed. Buttons appear only while a verdict is still pending.
+// One clean card per state: the sender's address first (so it's clear WHICH
+// email the verdict applies to), then a single status line. After a verdict,
+// the change-it link sits on the same line; buttons appear only while a
+// verdict is still pending. No card header — that avoids the divider line.
 function buildSenderCard(email) {
   const verdict = getVerdict(email);
   const exemption = verdict ? null : exemptionMatch(email, '');
   const section = CardService.newCardSection();
-  let title;
+  section.addWidget(CardService.newTextParagraph().setText('<b>' + escapeHtml(email) + '</b>'));
 
   if (verdict === VERDICT.approved) {
-    title = '👍 This email is approved';
-    section.addWidget(changeLinkParagraph());
+    section.addWidget(statusParagraph('👍 <b>This email is approved.</b>'));
   } else if (verdict === VERDICT.rejected) {
-    title = '👎 This email is rejected';
-    section.addWidget(changeLinkParagraph());
+    section.addWidget(statusParagraph('👎 <b>This email is rejected.</b>'));
   } else if (exemption) {
-    title = '✨ Delivered via exemption (' + exemption + ')';
-    section.addWidget(changeLinkParagraph());
+    section.addWidget(statusParagraph('✨ <b>Delivered via exemption (' + exemption + ').</b>'));
   } else {
-    title = '⏳ Awaiting your verdict';
+    section.addWidget(CardService.newTextParagraph().setText('⏳ Awaiting your verdict'));
     section.addWidget(verdictButtons(email));
   }
 
-  return CardService.newCardBuilder()
-    .setHeader(CardService.newCardHeader().setTitle(title))
-    .addSection(section)
-    .build();
+  return CardService.newCardBuilder().addSection(section).build();
 }
 
-function changeLinkParagraph() {
+function statusParagraph(statusHtml) {
   const url = webAppUrl();
-  const text = url
-    ? 'If you want to change it, <a href="' + url + '">click here</a>'
-    : 'You can change this on the dashboard (deploy the web app to enable the link).';
-  return CardService.newTextParagraph().setText(text);
+  const suffix = url ? ' If you want to change it, <a href="' + url + '">click here</a>' : '';
+  return CardService.newTextParagraph().setText(statusHtml + suffix);
 }
 
 function verdictButtons(email) {
