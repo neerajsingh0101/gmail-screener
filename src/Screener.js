@@ -37,7 +37,7 @@ function triageNewMessages(triageId) {
     else hold.push(id);
   });
 
-  batchMove(deliver, ['INBOX'], [triageId]);
+  deliverToInbox(deliver, [triageId]);
   batchMove(hold, [getConfig('labelPending')], [triageId]);
   batchMove(reject, [getConfig('labelRejected')], [triageId]);
 }
@@ -80,7 +80,7 @@ function approveSender(email) {
     labelIds: [getConfig('labelPending')],
     q: 'from:' + email,
   });
-  batchMove(held, ['INBOX'], [getConfig('labelPending')]);
+  deliverToInbox(held, [getConfig('labelPending')]);
   return held.length;
 }
 
@@ -116,8 +116,78 @@ function rescreenPending() {
     }
   });
 
-  batchMove(release, ['INBOX'], [pendingId]);
+  deliverToInbox(release, [pendingId]);
   return release.length;
+}
+
+// --- Playing nicely with the user's own filters -----------------------------
+// Gmail runs filters exactly once, at delivery, and offers no way to re-run
+// them later. The user's filters DID run (their labels are applied normally),
+// but any "Skip Inbox" action they took is invisible to us — the catch-all
+// screener filter also removed INBOX. So before delivering mail to the inbox,
+// re-check the user's own skip-inbox filters and leave matching mail archived
+// instead of forcing it into the inbox.
+function deliverToInbox(ids, removeLabelIds) {
+  if (ids.length === 0) return;
+  const skipQueries = userSkipInboxQueries();
+  if (skipQueries.length === 0) {
+    batchMove(ids, ['INBOX'], removeLabelIds);
+    return;
+  }
+
+  const toInbox = [];
+  const stayArchived = [];
+  ids.forEach(function (id) {
+    (matchesAnyFilter(id, skipQueries) ? stayArchived : toInbox).push(id);
+  });
+  batchMove(toInbox, ['INBOX'], removeLabelIds);
+  batchMove(stayArchived, [], removeLabelIds);
+}
+
+// Search queries equivalent to the user's own skip-inbox filters. The
+// screener's catch-all filter (the one that applies the triage label) is
+// excluded.
+function userSkipInboxQueries() {
+  const triageId = getConfig('labelTriage');
+  const queries = [];
+  (Gmail.Users.Settings.Filters.list('me').filter || []).forEach(function (f) {
+    const action = f.action || {};
+    if ((action.addLabelIds || []).indexOf(triageId) !== -1) return;
+    if ((action.removeLabelIds || []).indexOf('INBOX') === -1) return;
+    const query = filterCriteriaQuery(f.criteria || {});
+    if (query) queries.push(query);
+  });
+  return queries;
+}
+
+function filterCriteriaQuery(criteria) {
+  const parts = [];
+  if (criteria.from) parts.push('from:(' + criteria.from + ')');
+  if (criteria.to) parts.push('to:(' + criteria.to + ')');
+  if (criteria.subject) parts.push('subject:(' + criteria.subject + ')');
+  if (criteria.query) parts.push('(' + criteria.query + ')');
+  if (criteria.negatedQuery) parts.push('-(' + criteria.negatedQuery + ')');
+  if (criteria.hasAttachment) parts.push('has:attachment');
+  return parts.join(' ');
+}
+
+// Does this message match any of the given filter queries? Evaluated by
+// Gmail's own search engine via rfc822msgid:, so operator semantics are
+// exactly Gmail's.
+function matchesAnyFilter(messageId, queries) {
+  const message = Gmail.Users.Messages.get('me', messageId, {
+    format: 'metadata',
+    metadataHeaders: ['Message-ID'],
+  });
+  const rfcId = String(headerValue(message, 'Message-ID') || '').replace(/[<>]/g, '');
+  if (!rfcId) return false;
+  return queries.some(function (query) {
+    const result = Gmail.Users.Messages.list('me', {
+      q: 'rfc822msgid:' + rfcId + ' ' + query,
+      maxResults: 1,
+    });
+    return (result.messages || []).length > 0;
+  });
 }
 
 // Senders currently awaiting a verdict, newest activity first.

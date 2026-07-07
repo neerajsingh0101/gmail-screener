@@ -200,6 +200,11 @@ Three deliberate design decisions worth knowing:
   anything else, check `@Screener/Pending` or the dashboard.
 - **Approved mail arrives with up to a 1 minute delay** (the polling interval). Phone notifications
   fire when the mail reaches your inbox.
+- **Your other Gmail filters keep working.** Filters run once, at delivery, so labels from your
+  own filters are applied normally — the screener never touches any label besides Inbox and its
+  three `@Screener` labels. And when it delivers held or exempt mail, it re-checks your own
+  "Skip Inbox" filters and leaves matching mail archived instead of forcing it into the inbox
+  (Gmail offers no way to re-run filters, so the screener emulates that one action).
 - **If the script ever stops** (uncaught error, quota), mail queues up safely in
   `@Screener/Pending` — nothing is lost. Apps Script emails you when a trigger fails repeatedly.
 - **Quotas:** consumer accounts get 90 min/day of trigger runtime; an idle screening pass takes
