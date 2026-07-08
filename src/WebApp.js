@@ -142,8 +142,8 @@ function renderDashboard(notice) {
     'does not approve the sender. If you have explicitly rejected a sender, that rejection still ' +
     'takes priority. In that case, the email will not be delivered even if its subject contains ' +
     'an exempted keyword or it comes from an exempted domain.</p>' +
-    exemptionBlock(url, 'domains', 'Exempted domains', 'Any email address from these domains will not be held for screening and will be delivered to your inbox. Matching is case-insensitive.', 'github.com') +
-    exemptionBlock(url, 'keywords', 'Exempted keywords', 'Emails with subjects containing any of these keywords will skip screening and be delivered directly to your inbox. Keyword matching is case-insensitive.', 'login code') +
+    exemptionBlock(url, 'domains', 'Exempted domains', 'Any email address from these domains will not be held for screening and will be delivered to your inbox. Matching is case-insensitive.') +
+    exemptionBlock(url, 'keywords', 'Exempted keywords', 'Emails with subjects containing any of these keywords will skip screening and be delivered directly to your inbox. Keyword matching is case-insensitive.') +
     '<h2>Approved senders (' + verdicts.approved.length + ')</h2>' +
     addSenderControl(url) +
     '<ul>' + verdictList(verdicts.approved) + '</ul>' +
@@ -161,14 +161,14 @@ function addSenderControl(url) {
     '<summary>Add</summary>' +
     '<form class="add" method="get" action="' + url + '">' +
     '<input type="hidden" name="action" value="approve">' +
-    '<input type="text" name="sender" placeholder="someone@example.com" required> ' +
+    '<input type="text" name="sender" required> ' +
     '<button type="submit">Approve</button>' +
     '</form>' +
     '</details>'
   );
 }
 
-function exemptionBlock(url, type, title, hint, placeholder) {
+function exemptionBlock(url, type, title, hint) {
   const values = getExemptions(type);
   const chips = values
     .map(function (value) {
@@ -184,12 +184,15 @@ function exemptionBlock(url, type, title, hint, placeholder) {
     '<h3>' + title + '</h3>' +
     '<p class="muted">' + hint + '</p>' +
     '<div class="chips">' + chips + '</div>' +
+    '<details class="add-sender">' +
+    '<summary>Add</summary>' +
     '<form class="add" method="get" action="' + url + '">' +
     '<input type="hidden" name="action" value="add-exemption">' +
     '<input type="hidden" name="type" value="' + type + '">' +
-    '<input type="text" name="value" placeholder="' + escapeHtml(placeholder) + '" required> ' +
+    '<input type="text" name="value" required> ' +
     '<button type="submit">Add</button>' +
-    '</form>'
+    '</form>' +
+    '</details>'
   );
 }
 
