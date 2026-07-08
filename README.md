@@ -144,6 +144,8 @@ One catch worth knowing: plain chat at **claude.ai** or **chatgpt.com** can't do
 Those answer in text; they can't click buttons inside your browser. You need a version that can
 actually *control a browser*:
 
+- **Claude Code** or **Codex** — if you already use either, you're all set: they can drive a
+  browser, so the install just works. Point them at this README and go.
 - **Claude in Chrome** — a browser extension (included with paid Claude plans) that clicks and
   types in your own Chrome, where you're already signed into Google. Get it at
   [claude.com/claude-for-chrome](https://claude.com/claude-for-chrome).
