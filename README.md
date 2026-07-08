@@ -44,8 +44,7 @@ running it. You also deploy it yourself, into your own Google Apps Script enviro
 and your sender lists never leave your Google account, and no third party is involved.
 
 Having said that, a fair warning: software can always have vulnerabilities. If you notice any
-security-related issue, please contact [the author](https://github.com/neerajsingh0101) of this
-project.
+security-related issue, please contact [me](https://github.com/neerajsingh0101).
 
 ## Install (~5 minutes)
 
