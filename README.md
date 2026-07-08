@@ -136,8 +136,7 @@ arrives daily at 8am (change `DIGEST_HOUR` in `Config.js`), and the dashboard is
 ### Install by agent
 
 If you use an AI coding agent that can drive a browser — Claude Code, Codex, and friends — you
-can hand it the manual steps instead of clicking through them yourself. (This is how the project
-itself is maintained: an agent operating the Apps Script editor through Chrome.)
+can hand it the manual steps instead of clicking through them yourself.
 
 With Claude Code:
 
