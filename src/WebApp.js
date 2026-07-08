@@ -135,10 +135,14 @@ function renderDashboard(notice) {
       : '<p class="muted">Click a sender&#39;s name to read their held mail in Gmail.</p>' +
         '<table>' + pendingRows + '</table>') +
     '<h2 class="exemptions-title">Exemptions</h2>' +
-    '<p class="muted">Mail matching any of these is delivered straight to your inbox — no screening. ' +
-    'The sender is not approved by it, and an explicit rejection still wins: if you have rejected ' +
-    'someone and they send an email containing one of your exemption keywords in the subject, it ' +
-    'will not be delivered — an explicit rejection always wins.</p>' +
+    '<p class="muted">Not all emails are equal. You may have priority clients whose emails should ' +
+    'not be screened. You can add their domains to “Exemption Domains”.</p>' +
+    '<p class="muted">Similarly, emails containing OTPs are time-sensitive and should not be ' +
+    'screened. You can use “Exemption Keywords” to match these emails.</p>' +
+    '<p class="muted">Please note that an exemption can allow an email to be delivered, but it ' +
+    'does not approve the sender. If you have explicitly rejected a sender, that rejection still ' +
+    'takes priority. In that case, the email will not be delivered even if its subject contains ' +
+    'an exempted keyword or it comes from an exempted domain.</p>' +
     exemptionBlock(url, 'domains', 'Exemption Domains', 'Any email address from these domains will not be held for screening and will be delivered to your inbox. Matching is case-insensitive.', 'github.com') +
     exemptionBlock(url, 'emails', 'Exemption Email Addresses', 'Emails from these specific email addresses will not be held for screening and will be delivered to your inbox. Matching is case-insensitive.', 'noreply@stripe.com') +
     exemptionBlock(url, 'keywords', 'Exemption Keywords', 'Emails with subjects containing any of these keywords will skip screening and be delivered directly to your inbox. Keyword matching is case-insensitive.', 'login code') +
