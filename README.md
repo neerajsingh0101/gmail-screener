@@ -94,7 +94,7 @@ need to copy.
     code is this repo, running under your own account, visible to no one else.
 44. Grant the Gmail permissions. The script asks for the minimum it needs: modify labels
     (`gmail.modify`), manage filters (`gmail.settings.basic`), manage its own triggers, and run
-    as a Gmail add-on (the [side panel](#the-gmail-side-panel-optional)).
+    as a Gmail add-on (the [side panel](#the-gmail-side-panel)).
 45. Click **Deploy** (top right).
 46. Click **New deployment**.
 47. Click the gear next to "Select type" and choose **Web app**.
@@ -138,11 +138,11 @@ When code in this repo changes and you want it on your install:
   approved/rejected sender lists, where you can add or remove senders directly. Each pending
   sender's name links to their held mail in Gmail so you can read before deciding.
 - **Gmail side panel** — read a held email in Gmail and approve/reject its sender right next to
-  it; see [The Gmail side panel](#the-gmail-side-panel-optional).
+  it; see [The Gmail side panel](#the-gmail-side-panel).
 - **From the editor** — `approveSender('a@b.com')`, `rejectSender('a@b.com')`,
   `addExemption('keywords', 'login code')`, or re-run `setup()` to repair labels/filter/triggers.
 
-## The Gmail side panel (optional)
+## The Gmail side panel
 
 The fastest workflow is deciding while reading: open a held email in Gmail and the **Gmail
 Screener card** in the right-hand side panel shows the sender's status with the same 👍 Approve /
