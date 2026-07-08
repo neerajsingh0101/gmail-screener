@@ -68,6 +68,13 @@ function buildSenderCard(email) {
   } else {
     section.addWidget(CardService.newTextParagraph().setText('⏳ Awaiting your verdict'));
     section.addWidget(verdictButtons(email));
+    const dash = webAppUrl();
+    if (dash) {
+      // Small, secondary link — e.g. to approve the sender's whole domain.
+      section.addWidget(CardService.newTextParagraph().setText(
+        '<font color="#5f6368"><a href="' + dash + '">Click here to visit Gscreener dashboard</a></font>'
+      ));
+    }
   }
 
   return CardService.newCardBuilder().addSection(section).build();
