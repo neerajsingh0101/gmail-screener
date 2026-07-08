@@ -102,20 +102,18 @@ function verdictButtons(email) {
 }
 
 function addonApprove(e) {
-  const email = e.parameters.email;
-  const released = approveSender(email);
-  return addonActionResponse(email, '👍 Approved — released ' + released + ' held email(s).');
+  approveSender(e.parameters.email);
+  return addonActionResponse(e.parameters.email);
 }
 
 function addonReject(e) {
-  const email = e.parameters.email;
-  const moved = rejectSender(email);
-  return addonActionResponse(email, '👎 Rejected — moved ' + moved + ' email(s) out of screening.');
+  rejectSender(e.parameters.email);
+  return addonActionResponse(e.parameters.email);
 }
 
-function addonActionResponse(email, toast) {
+// The refreshed card is the confirmation — no toast needed.
+function addonActionResponse(email) {
   return CardService.newActionResponseBuilder()
-    .setNotification(CardService.newNotification().setText(toast))
     .setNavigation(CardService.newNavigation().updateCard(buildSenderCard(email)))
     .build();
 }
