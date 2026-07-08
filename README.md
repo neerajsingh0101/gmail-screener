@@ -18,8 +18,8 @@ recoverable, just never in your inbox.
    that makes all incoming mail skip the inbox and land in a hidden `@Screener/Triage` label.
 2. A time trigger runs `screenNewMail()` every minute. Mail from approved senders is moved to the
    inbox (you'll rarely notice the ≤1 minute delay). Mail from rejected senders goes to
-   `@Screener/Rejected`. Mail matching an [exemption](#exemptions) — sender domain, sender address
-   or subject keyword — is delivered immediately even from unknown senders. Everyone else waits in
+   `@Screener/Rejected`. Mail matching an [exemption](#exemptions) — sender domain or subject
+   keyword — is delivered immediately even from unknown senders. Everyone else waits in
    `@Screener/Pending`.
 3. The same pass scans your Sent mail: anyone you email is added to the approved list.
 4. Once a day, `sendDigest()` emails you the list of senders awaiting review with 👍/👎 buttons.
@@ -135,8 +135,8 @@ When code in this repo changes and you want it on your install:
   sender to your inbox and approves them forever; 👎 moves their mail to `@Screener/Rejected` and
   blocks them forever.
 - **Dashboard** (web app URL) — same buttons, any time, plus the Exemptions section and your
-  approved/rejected lists with per-sender undo. Each pending sender's name links to their held
-  mail in Gmail so you can read before deciding.
+  approved/rejected sender lists, where you can add or remove senders directly. Each pending
+  sender's name links to their held mail in Gmail so you can read before deciding.
 - **Gmail side panel** — read a held email in Gmail and approve/reject its sender right next to
   it; see [The Gmail side panel](#the-gmail-side-panel-optional).
 - **From the editor** — `approveSender('a@b.com')`, `rejectSender('a@b.com')`,
@@ -164,20 +164,21 @@ To enable it, after all files (including `appsscript.json` and `AddOn`) are in p
 
 ## Exemptions
 
-Three lists (managed from the dashboard) let mail bypass screening entirely:
+Two lists (managed from the dashboard) let mail bypass screening entirely:
 
 - **Domains** — `github.com` delivers mail from any `…@github.com` address, subdomains included
   (`notifications@mail.github.com` matches too).
-- **Email addresses** — specific senders, e.g. `noreply@stripe.com`.
 - **Subject keywords** — if the subject contains the phrase (substring match), the email is
   delivered no matter who sent it. `login code`, `OTP`, `password` and `verification` cover most
   sign-in, sign-up and password-reset flows.
 
-Matching for all three lists is case-insensitive.
+Matching for both lists is case-insensitive. There is deliberately no per-address exemption —
+exempting one address is the same as approving the sender, which you can do from the dashboard
+(**Approved senders → Add**) without waiting for their first email.
 
-New installs start pre-seeded with a few defaults — domains `github.com` and `stripe.com`, address
-`notifications@github.com`, keywords `login code` and `otp`. Remove any of them from the dashboard;
-`setup()` never re-adds entries you've removed.
+New installs start pre-seeded with a few defaults — domains `github.com` and `stripe.com`,
+keywords `login code` and `otp`. Remove any of them from the dashboard; `setup()` never re-adds
+entries you've removed.
 
 Three deliberate design decisions worth knowing:
 

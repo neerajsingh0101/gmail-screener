@@ -13,6 +13,7 @@ function setup() {
   ensureFilter(labelIds.triage);
   ensureTriggers();
   ensureDefaultExemptions();
+  migrateEmailExemptionsToApproved();
   setConfig('lastSentScan', String(Math.floor(Date.now() / 1000)));
 
   Logger.log('Gmail Screener installed for %s.', self);
@@ -77,6 +78,19 @@ function ensureDefaultExemptions() {
       saveExemptions(type, DEFAULT_EXEMPTIONS[type]);
     }
   });
+}
+
+// Older versions had a third exemption list of individual email addresses.
+// Exempting an address is the same as approving the sender, so fold any
+// leftover entries into the approved senders list and drop the old property.
+// Explicit rejections are never overwritten.
+function migrateEmailExemptionsToApproved() {
+  const stored = props().getProperty('x:emails');
+  if (stored === null) return;
+  JSON.parse(stored).forEach(function (email) {
+    if (!getVerdict(email)) setVerdict(normalizeEmail(email), VERDICT.approved);
+  });
+  props().deleteProperty('x:emails');
 }
 
 function ensureTriggers() {

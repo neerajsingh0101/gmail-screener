@@ -46,14 +46,11 @@ function handleAddExemption(type, rawValue) {
   if (type === 'domains') {
     value = normalizeDomain(value);
     if (value.indexOf('@') !== -1) {
-      // A full address typed into the domain box — file it where it belongs.
-      type = 'emails';
-      value = normalizeEmail(value);
-    }
-  } else if (type === 'emails') {
-    value = normalizeEmail(value);
-    if (value.indexOf('@') === -1) {
-      return '"' + value + '" is not an email address — did you mean the domains list?';
+      // A full address typed into the domain box — that's a sender approval.
+      const email = normalizeEmail(value);
+      const released = approveSender(email);
+      return 'That is an email address, so ' + email + ' was added to approved senders' +
+        (released ? ' — released ' + released + ' held email(s) to your inbox.' : '.');
     }
   } else {
     // HTML form GETs encode spaces as '+', and Apps Script hands the '+'
@@ -126,6 +123,8 @@ function renderDashboard(notice) {
     '.chip a{color:#5f6368;text-decoration:none;margin-left:6px}' +
     '.add input[type=text]{padding:6px 10px;border:1px solid #dadce0;border-radius:6px;font-size:13px;width:220px}' +
     '.add button{padding:6px 14px;border:0;border-radius:6px;background:#1a73e8;color:#fff;font-size:13px;cursor:pointer}' +
+    '.add-sender summary{color:#1a73e8;cursor:pointer;font-size:13px;margin:4px 0;width:fit-content}' +
+    '.add-sender form{margin:8px 0}' +
     '</style></head><body>' +
     '<h1>Gmail Screener</h1>' +
     (notice ? '<div class="notice">' + escapeHtml(notice) + '</div>' : '') +
@@ -144,13 +143,28 @@ function renderDashboard(notice) {
     'takes priority. In that case, the email will not be delivered even if its subject contains ' +
     'an exempted keyword or it comes from an exempted domain.</p>' +
     exemptionBlock(url, 'domains', 'Exempted domains', 'Any email address from these domains will not be held for screening and will be delivered to your inbox. Matching is case-insensitive.', 'github.com') +
-    exemptionBlock(url, 'emails', 'Exempted email addresses', 'Emails from these specific email addresses will not be held for screening and will be delivered to your inbox. Matching is case-insensitive.', 'noreply@stripe.com') +
     exemptionBlock(url, 'keywords', 'Exempted keywords', 'Emails with subjects containing any of these keywords will skip screening and be delivered directly to your inbox. Keyword matching is case-insensitive.', 'login code') +
     '<h2>Approved senders (' + verdicts.approved.length + ')</h2>' +
+    addSenderControl(url) +
     '<ul>' + verdictList(verdicts.approved) + '</ul>' +
     '<h2>Rejected senders (' + verdicts.rejected.length + ')</h2>' +
     '<ul>' + verdictList(verdicts.rejected) + '</ul>' +
     '</body></html>'
+  );
+}
+
+// A collapsed "Add" link under Approved senders; expands into a small form
+// that approves the entered address (and releases any held mail from it).
+function addSenderControl(url) {
+  return (
+    '<details class="add-sender">' +
+    '<summary>Add</summary>' +
+    '<form class="add" method="get" action="' + url + '">' +
+    '<input type="hidden" name="action" value="approve">' +
+    '<input type="text" name="sender" placeholder="someone@example.com" required> ' +
+    '<button type="submit">Approve</button>' +
+    '</form>' +
+    '</details>'
   );
 }
 

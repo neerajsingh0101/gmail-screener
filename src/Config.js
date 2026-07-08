@@ -148,17 +148,17 @@ function escapeHtml(text) {
 }
 
 // --- Exemptions -------------------------------------------------------------
-// Three user-managed lists that bypass screening: sender domains, sender
-// addresses, and subject keywords. Matching mail is delivered immediately but
-// the sender is NOT added to the approved list — their next non-matching
-// email is screened normally. An explicit rejection always wins.
+// Two user-managed lists that bypass screening: sender domains and subject
+// keywords. Matching mail is delivered immediately but the sender is NOT
+// added to the approved list — their next non-matching email is screened
+// normally. An explicit rejection always wins. (Exempting an individual
+// address is just approving the sender — that lives in the approved list.)
 
-const EXEMPTION_TYPES = ['domains', 'emails', 'keywords'];
+const EXEMPTION_TYPES = ['domains', 'keywords'];
 
 // Seeded once by setup() on first install; freely removable from the dashboard.
 const DEFAULT_EXEMPTIONS = {
   domains: ['github.com', 'stripe.com'],
-  emails: ['notifications@github.com'],
   keywords: ['login code', 'otp'],
 };
 
@@ -199,10 +199,9 @@ function normalizeDomain(raw) {
     .replace(/\.$/, '');
 }
 
-// Returns why this email bypasses screening ('domain', 'email' or 'keyword'),
-// or null if it doesn't. All matching is case-insensitive on both sides, so
-// values added with any casing (e.g. via addExemption in the editor) still
-// match.
+// Returns why this email bypasses screening ('domain' or 'keyword'), or null
+// if it doesn't. All matching is case-insensitive on both sides, so values
+// added with any casing (e.g. via addExemption in the editor) still match.
 function exemptionMatch(fromEmail, subject) {
   const sender = String(fromEmail).toLowerCase();
   const domain = sender.split('@')[1] || '';
@@ -212,11 +211,6 @@ function exemptionMatch(fromEmail, subject) {
     return domain === exempt || domain.endsWith('.' + exempt);
   });
   if (domainHit) return 'domain';
-
-  const emailHit = getExemptions('emails').some(function (raw) {
-    return String(raw).toLowerCase() === sender;
-  });
-  if (emailHit) return 'email';
 
   const subjectLower = String(subject || '').toLowerCase();
   const keywordHit = getExemptions('keywords').some(function (raw) {
