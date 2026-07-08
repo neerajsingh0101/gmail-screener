@@ -36,7 +36,7 @@ function doGet(e) {
     }
   }
 
-  return HtmlService.createHtmlOutput(renderDashboard(notice)).setTitle('Gmail Screener');
+  return HtmlService.createHtmlOutput(renderDashboard(notice)).setTitle('Gmail Screener Dashboard');
 }
 
 function handleAddExemption(type, rawValue) {
@@ -126,7 +126,7 @@ function renderDashboard(notice) {
     '.add-sender summary{color:#1a73e8;cursor:pointer;font-size:13px;margin:4px 0;width:fit-content}' +
     '.add-sender form{margin:8px 0}' +
     '</style></head><body>' +
-    '<h1>Gmail Screener</h1>' +
+    '<h1>Gmail Screener Dashboard</h1>' +
     (notice ? '<div class="notice">' + escapeHtml(notice) + '</div>' : '') +
     '<h2>Awaiting review (' + senders.length + ')</h2>' +
     (senders.length === 0
