@@ -55,6 +55,8 @@ Gscreener is open source, so you can review the code before installing it.
 
 You deploy it inside your own Google Apps Script account. Your emails and sender lists stay inside your Google account.
 
+Gscreener only reads the message headers it needs, including From, To, and Subject. It does not send your email anywhere.
+
 No software is completely free of security risks. If you find a security issue, please contact [me](https://github.com/neerajsingh0101).
 
 ## No AI
@@ -283,6 +285,12 @@ Rejected emails still count toward your Gmail storage.
 
 For high-volume senders, occasionally delete the messages under Gscreener/Rejected or create your own cleanup rule.
 
+### Automatic approval from sent mail
+
+Gscreener also checks your Sent folder.
+
+When you email someone, their address is automatically added to your approved list. Their replies will not be screened.
+
 ## How it works
 
 Gscreener cannot stop an email from reaching your Gmail account. Once someone sends it, Gmail receives it.
@@ -312,19 +320,7 @@ Gscreener only reads the message headers it needs, including From, To, and Subje
 
 The three Gscreener labels are normally hidden from the Gmail sidebar. Most of the time, you review pending senders from the dashboard, digest email, or Gmail side panel.
 
-### Automatic approval from sent mail
-
-Gscreener also checks your Sent folder.
-
-When you email someone, their address is automatically added to your approved list. Their replies will not be screened.
-
-### Daily digest
-
-Once a day, sendDigest() sends you a list of the people waiting for review.
-
-The digest buttons and dashboard are part of a private web app that only your Google account can access.
-
-### Stored data
+### Data privacy
 
 Your approved, rejected, and exemption lists are stored in Apps Script Properties inside your Google account.
 
@@ -332,10 +328,28 @@ Nothing leaves Google.
 
 ## Uninstall
 
-Run `uninstall()` in the editor: it deletes the filter and triggers and releases everything in
-`Gscreener/Pending` back to your inbox. Labels, rejected mail and your sender lists are kept;
-delete them manually if you want a clean slate. Then remove the script's access at
-[myaccount.google.com/connections](https://myaccount.google.com/connections).
+Uninstalling is also done by an AI agent. Give your agent this prompt.
+
+> Uninstall Gscreener from my Google account:
+>
+> 1. Open my Gscreener project at script.google.com. Open Setup.gs, choose `uninstall` from the
+>    function menu, and run it. This removes Gscreener's triggers and its catch-all Gmail filter,
+>    so new mail goes straight to my inbox again.
+> 2. Delete the Gscreener Apps Script project.
+> 3. Revoke Gscreener's access at https://myaccount.google.com/connections.
+>
+> Do not delete or move any email. Do not delete the Gscreener/Pending, Gscreener/Rejected, or
+> Gscreener/Triage labels. Leave all of them exactly as they are.
+
+Run `uninstall()` (step 1) before deleting the project (step 2). The catch-all filter lives in
+Gmail, not in the Apps Script project, so deleting the project does not remove it. If the filter
+is left behind, every new email keeps getting pulled into the hidden Gscreener/Triage label with
+nothing left to sort it. Running `uninstall()` deletes the filter and prevents that.
+
+Nothing of yours is deleted. The three Gscreener labels, every email under them, and your
+approved, rejected, and exemption lists are all kept exactly as they are. Held and rejected
+emails stay under their labels, which are hidden — expand **More** under **Labels** in Gmail to
+read them.
 
 ## License
 
