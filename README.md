@@ -230,27 +230,61 @@ The dashboard shows how many emails were released.
 
 ## Things to know
 
-- **Time-sensitive mail from new senders is held too.** Sign-up confirmations, OTPs and receipts
-  from services you just joined are "unknown senders". Add subject keywords like `login code`,
-  `OTP` and `password` under [Exemptions](#exemptions) so those are delivered instantly; for
-  anything else, check `Gscreener/Pending` or the dashboard.
-- **Approved mail arrives with up to a 1 minute delay** (the polling interval). Phone notifications
-  fire when the mail reaches your inbox.
-- **Your other Gmail filters keep working.** Filters run once, at delivery, so labels from your
-  own filters are applied normally — the screener never touches any label besides Inbox and its
-  three `Gscreener` labels. And when it delivers held or exempt mail, it re-checks your own
-  "Skip Inbox" filters and leaves matching mail archived instead of forcing it into the inbox
-  (Gmail offers no way to re-run filters, so the screener emulates that one action).
-- **If the script ever stops** (uncaught error, quota), mail queues up safely in
-  `Gscreener/Pending` — nothing is lost. Apps Script emails you when a trigger fails repeatedly.
-- **Quotas:** consumer accounts get 90 min/day of trigger runtime; an idle screening pass takes
-  well under a second, so an every-minute trigger uses a fraction of that. If you want more
-  headroom, set `POLL_MINUTES = 5`.
-- **Multiple Google accounts in one browser:** if the dashboard says you need permission, you're
-  signed into the wrong account — open the link in a profile/window where the Gmail account is
-  primary.
-- **Storage:** rejected mail still counts toward your Gmail storage. If a rejected sender is
-  high-volume, occasionally empty the label (or add your own cleanup rule).
+### Time-sensitive emails may be held
+
+Confirmation emails, OTPs, and receipts can come from unknown senders.
+
+Add common phrases such as login code, OTP, and password under Exemptions to deliver these messages immediately.
+
+For other messages, check the dashboard or Gscreener/Pending.
+
+### Delivery can take up to one minute
+
+Gscreener checks held emails once per minute.
+
+After an email is approved, it may take up to one minute to reach your inbox. Your phone notification appears when the email reaches the inbox.
+
+### Your Gmail filters continue to work
+
+Gscreener only changes the Inbox label and its three labels:
+
+* Gscreener/Triage
+* Gscreener/Pending
+* Gscreener/Rejected
+
+Your other Gmail filters still add their normal labels when an email arrives.
+
+When Gscreener releases a held or exempted email, it also checks your own Skip Inbox filters. If the email matches one of those filters, it stays archived instead of being forced into your inbox.
+
+Gmail does not provide a way to run filters again, so Gscreener reproduces the Skip Inbox behavior itself.
+
+### Emails remain safe if the script stops
+
+If a script error or quota problem stops Gscreener, incoming emails remain in Gscreener/Pending.
+
+Nothing is lost.
+
+Google Apps Script also sends you an email when a trigger repeatedly fails.
+
+### Apps Script quotas
+
+Consumer Google accounts receive 90 minutes of trigger runtime each day.
+
+An empty screening run takes less than a second, so running the script once per minute uses only part of this allowance.
+
+To reduce usage, change:
+
+### Using multiple Google accounts
+
+If the dashboard says you do not have permission, you may be signed in with the wrong Google account.
+
+Open the dashboard in a browser profile or window where the correct Gmail account is the primary account.
+
+### Rejected emails use storage
+
+Rejected emails still count toward your Gmail storage.
+
+For high-volume senders, occasionally delete the messages under Gscreener/Rejected or create your own cleanup rule.
 
 ## How it works
 
