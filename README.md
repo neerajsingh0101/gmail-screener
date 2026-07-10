@@ -266,13 +266,6 @@ Nothing is lost.
 
 Google Apps Script also sends you an email when a trigger repeatedly fails.
 
-### Apps Script quotas
-
-Consumer Google accounts receive 90 minutes of trigger runtime each day.
-
-An empty screening run takes less than a second, so running the script once per minute uses only part of this allowance.
-
-To reduce usage, change:
 
 ### Using multiple Google accounts
 
@@ -288,36 +281,50 @@ For high-volume senders, occasionally delete the messages under Gscreener/Reject
 
 ## How it works
 
-**The screening strategy.** Nothing can stop an email from being *delivered* to your Gmail —
-once someone sends it, it lands in your account no matter what. So Gscreener can't literally hold
-mail back before it arrives. Instead it does the next best thing, entirely with Gmail labels
-inside your own mailbox:
+Gscreener cannot stop an email from reaching your Gmail account. Once someone sends it, Gmail receives it.
 
-1. A single catch-all Gmail filter (`larger:1`, which matches every email) fires the instant any
-   mail arrives and immediately pulls it **out of the inbox** into a hidden staging label,
-   `Gscreener/Triage`. So no email is ever seen in your inbox unscreened.
-2. A script runs every minute, looks at who each staged email is *from*, and re-labels it: mail
-   from an **approved** sender is put in your inbox; mail from a **rejected** sender goes to
-   `Gscreener/Rejected`; mail from an **unknown** sender waits in `Gscreener/Pending`; and mail
-   matching an [exemption](#exemptions) (sender domain or subject keyword) is delivered straight to
-   the inbox even from an unknown sender.
+Instead, Gscreener moves every new email out of the inbox before you see it and then decides where it should go.
 
-That's the whole trick — a catch-all "skip inbox" filter plus a script that sorts by sender. It's
-the same approach [HEY](https://www.hey.com/features/the-screener/) uses. Nothing is ever deleted
-or sent anywhere; the script only reads message headers (From/To/Subject) and moves labels around.
+### Step 1: Move new mail to Triage
 
-All three `Gscreener/*` labels are **hidden** from your Gmail sidebar — they're plumbing you never
-need to open. You review pending senders from the daily digest email and the dashboard, not by
-clicking a label.
+Gscreener adds a filter so that as soon as an email arrives, the filter removes it from the inbox and adds the hidden Gscreener/Triage label.
 
-A few more details:
+This prevents an unscreened email from appearing in your inbox.
 
-- The same minute-by-minute pass also scans your **Sent** mail: anyone you email is added to your
-  approved list automatically, so people you reach out to are never screened.
-- Once a day, `sendDigest()` emails you the senders awaiting review with 👍/👎 buttons. Those
-  buttons (and the dashboard) are a private web app only your own Google account can open.
-- Your approved/rejected/exemption lists live in the script's own storage (Script Properties),
-  inside your Google account. Nothing leaves Gmail.
+### Step 2: Sort the email
+
+A script runs once per minute and checks each email in Gscreener/Triage.
+
+It then handles the message based on the sender:
+
+* Approved sender: Move the email to the inbox.
+* Rejected sender: Move the email to Gscreener/Rejected.
+* Unknown sender: Move the email to Gscreener/Pending.
+* Exempted email: Deliver it based on its sender domain or subject keyword.
+
+That is the basic system: one Gmail filter moves all incoming mail out of the inbox, and a script sorts it.
+
+Gscreener only reads the message headers it needs, including From, To, and Subject. It does not send your email anywhere.
+
+The three Gscreener labels are normally hidden from the Gmail sidebar. Most of the time, you review pending senders from the dashboard, digest email, or Gmail side panel.
+
+### Automatic approval from sent mail
+
+Gscreener also checks your Sent folder.
+
+When you email someone, their address is automatically added to your approved list. Their replies will not be screened.
+
+### Daily digest
+
+Once a day, sendDigest() sends you a list of the people waiting for review.
+
+The digest buttons and dashboard are part of a private web app that only your Google account can access.
+
+### Stored data
+
+Your approved, rejected, and exemption lists are stored in Apps Script Properties inside your Google account.
+
+Nothing leaves Google.
 
 ## Uninstall
 
