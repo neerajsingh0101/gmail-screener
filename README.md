@@ -31,8 +31,8 @@ Gscreener sends you a daily digest of emails waiting for review. You can also ma
 - [Security](#security)
 - [No AI](#no-ai)
 - [Installation](#installation)
-  - [Step 1: Let AI agent do the step 1](#step-1-let-ai-agent-do-the-step-1)
-  - [Enable the Gmail side panel](#enable-the-gmail-side-panel)
+  - [Step 1: Let the AI agent install Gscreener](#step-1-let-the-ai-agent-install-gscreener)
+  - [Step 2: Enable the Gmail side panel](#step-2-enable-the-gmail-side-panel)
 - [How to use Gscreener](#how-to-use-gscreener)
 - [Updating Gscreener](#updating-gscreener)
 - [Exemptions](#exemptions)
@@ -73,7 +73,7 @@ Installation has two steps:
 1. An AI agent installs and deploys Gscreener.
 2. You manually enable the side panel inside Gmail.
 
-## Step 1: Let AI agent do the step 1
+### Step 1: Let the AI agent install Gscreener
 
 The [checklist](docs/installation-steps.md) of items to be done is long.
 But AI agent can help. An AI agent that can control a browser can do the work.
@@ -100,10 +100,10 @@ Give your agent the following prompt.
 > Do not install the Gmail side panel.
 >
 > When you finish, show me the dashboard URL. Then show me how to enable the Gmail side panel using:
-> https://github.com/neerajsingh0101/gscreener#enable-the-gmail-side-panel
+> https://github.com/neerajsingh0101/gscreener#step-2-enable-the-gmail-side-panel
 
 
-### Enable the Gmail side panel
+### Step 2: Enable the Gmail side panel
 
 The agent cannot complete this part because it must be done inside your browser and not the automated browser controlled by the Agent.
 
