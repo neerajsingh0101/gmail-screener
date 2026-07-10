@@ -65,23 +65,20 @@ It keeps a list of approved and rejected email addresses and checks incoming ema
 
 Nothing analyzes the contents of your emails, and nothing is sent to an external service.
 
-## Install using an AI agent
+## Installation
 
-Installation has two parts:
+
+Installation has two steps:
 
 1. An AI agent installs and deploys Gscreener.
-2. You enable the side panel inside Gmail.
+2. You manually enable the side panel inside Gmail.
 
-An AI agent that can control a browser can:
+## Step 1: Let AI agent do the step 1
 
-* Create the Apps Script project.
-* Copy the Gscreener code into it.
-* Run the setup.
-* Deploy the dashboard.
+The [checklist](docs/installation-steps.md) of items to be done is long.
+But AI agent can help. An AI agent that can control a browser can do the work.
 
-The agent follows this [checklist](docs/installation-steps.md)
-
-You only need to help agent when Google asks you to:
+You only need to help the AI agent when Google asks you to:
 * Sign in.
 * Approve the requested permissions.
 
