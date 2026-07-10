@@ -65,21 +65,37 @@ It keeps a list of approved and rejected email addresses and checks incoming ema
 
 Nothing analyzes the contents of your emails, and nothing is sent to an external service.
 
-## Installation by an AI agent
+## Install using an AI agent
 
-Installation comes in two parts:
+Installation has two parts:
 
-1. **The agent sets it up for you.** An AI that can drive a web browser creates the Apps Script
-   project, pastes in the code, runs it, and deploys your dashboard — the whole
-   [detailed checklist](docs/installation-steps.md), without you clicking through it yourself. You
-   just handle the two moments that need a human: signing into Google and approving the permissions.
-2. **You turn on the Gmail side panel.** One short step the agent can't do for you — it has to
-   happen inside *your* Gmail — covered in
-   [Making Gmail side panel work](#making-gmail-side-panel-work). The agent points you there when
-   it's done.
+1. An AI agent installs and deploys Gscreener.
+2. You enable the side panel inside Gmail.
 
-You don't need to be a developer for either part.
+An AI agent that can control a browser can:
 
+* Create the Apps Script project.
+* Copy the Gscreener code into it.
+* Run the setup.
+* Deploy the dashboard.
+
+The agent follows this [checklist](docs/installation-steps.md)
+
+You only need to help agent when Google asks you to:
+* Sign in.
+* Approve the requested permissions.
+
+A normal chat at [claude.ai](http://claude.ai) or [chatgpt.com](http://chatgpt.com) cannot complete the installation because it cannot control your browser. Use one of these instead:
+
+* Claude Code or Codex: Both can control a browser and complete the installation.
+* Claude in Chrome: A Chrome extension available with paid Claude plans. Install it from [claude.com/claude-for-chrome⁠](https://claude.com/claude-for-chrome)￼.
+* ChatGPT agent mode: Available in supported ChatGPT plans. See [ChatGPT agent](https://chatgpt.com/features/agent/)⁠￼.
+
+
+
+
+
+  
 One catch worth knowing: plain chat at **claude.ai** or **chatgpt.com** can't do part 1 on its
 own. Those answer in text; they can't click buttons inside your browser. You need a version that
 can actually *control a browser*:
