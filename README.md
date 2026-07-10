@@ -33,13 +33,11 @@ People you write to are approved automatically.
 - [Cost](#cost)
 - [Security](#security)
 - [No AI](#no-ai)
-- [Installation steps](#installation-steps)
-  - [Installation by an AI agent](#installation-by-an-ai-agent)
-  - [Install manually](#install-manually)
+- [Installation by an AI agent](#installation-by-an-ai-agent)
+- [Making Gmail side panel work](#making-gmail-side-panel-work)
 - [How to use it](#how-to-use-it)
 - [Updating code](#updating-code)
 - [Daily use](#daily-use)
-- [The Gmail side panel](#the-gmail-side-panel)
 - [Exemptions](#exemptions)
 - [Things to know](#things-to-know)
 - [How it works](#how-it-works)
@@ -69,21 +67,24 @@ old-fashioned way: it keeps a list of the emails you have approved and the ones 
 and it checks every incoming email against that list. Nothing reads your mail, and nothing is sent
 anywhere to be analyzed.
 
-## Installation steps
+## Installation by an AI agent
 
-The steps below can be followed two ways: **by hand**, or **by an AI agent** that can drive a
-browser. Both paths run exactly the same steps — pick whichever suits you.
+Installation comes in two parts:
 
-### Installation by an AI agent
+1. **The agent sets it up for you.** An AI that can drive a web browser creates the Apps Script
+   project, pastes in the code, runs it, and deploys your dashboard — the whole
+   [detailed checklist](docs/installation-steps.md), without you clicking through it yourself. You
+   just handle the two moments that need a human: signing into Google and approving the permissions.
+2. **You turn on the Gmail side panel.** One short step the agent can't do for you — it has to
+   happen inside *your* Gmail — covered in
+   [Making Gmail side panel work](#making-gmail-side-panel-work). The agent points you there when
+   it's done.
 
-Don't want to click through all those steps yourself? An AI agent that can drive a web browser
-can do the whole thing for you. You just handle the two moments that need a human — signing into
-Google and approving the permissions — and the agent does everything else. You don't need to be a
-developer.
+You don't need to be a developer for either part.
 
-One catch worth knowing: plain chat at **claude.ai** or **chatgpt.com** can't do this on its own.
-Those answer in text; they can't click buttons inside your browser. You need a version that can
-actually *control a browser*:
+One catch worth knowing: plain chat at **claude.ai** or **chatgpt.com** can't do part 1 on its
+own. Those answer in text; they can't click buttons inside your browser. You need a version that
+can actually *control a browser*:
 
 - **Claude Code** or **Codex** — if you already use either, you're all set: they can drive a
   browser, so the install just works. Point them at this README and go.
@@ -95,99 +96,36 @@ actually *control a browser*:
 
 Once it can see your browser, paste this:
 
-> Install Gscreener for me by following the "Install manually" steps in the README at
-> https://github.com/neerajsingh0101/gscreener, up to and including deploying the web app. Do
-> all the clicking and pasting yourself. Two moments need me: when Google asks me to sign in,
-> and when the "Gscreener wants access" permission screen appears — pause and let me handle
-> those, then keep going. Do not install the Gmail side panel yourself. When you're finished,
-> show me my dashboard URL, then print the one step left for me to do by hand — turning on the
-> side panel — and link me to
-> https://github.com/neerajsingh0101/gscreener#the-gmail-side-panel.
+> Install Gscreener for me by following the steps in
+> https://github.com/neerajsingh0101/gscreener/blob/main/docs/installation-steps.md, up to and
+> including deploying the web app. Do all the clicking and pasting yourself. Two moments need me:
+> when Google asks me to sign in, and when the "Gscreener wants access" permission screen appears
+> — pause and let me handle those, then keep going. Do not install the Gmail side panel
+> yourself. When you're finished, show me my dashboard URL, then print the one step left for me to
+> do by hand — turning on the side panel — and link me to
+> https://github.com/neerajsingh0101/gscreener#making-gmail-side-panel-work.
 
-You'll be needed at two moments during the install — the Google sign-in and the permission
-approval (the agent can't and shouldn't know your password or grant Gmail access for you) — and
-once more at the very end, for a single quick step the agent hands you a link for: turning on the
-[side panel](#the-gmail-side-panel). The agent does everything else.
+You'll be needed at two moments during part 1 — the Google sign-in and the permission approval
+(the agent can't and shouldn't know your password or grant Gmail access for you) — and then
+once more for part 2. The agent does everything else.
 
-### Install manually
+## Making Gmail side panel work
 
-One action per step. Code links open the **raw** file, so `⌘A`/`Ctrl+A` selects exactly what you
-need to copy.
+This is the part the agent leaves to you — it has to happen inside your own Gmail, and it takes
+about a minute.
 
-1. Go to [script.google.com](https://script.google.com).
-2. Click **New project**.
-3. Click the project name at the top (it says **Untitled project**).
-4. Rename it to `Gscreener`.
-5. In the left sidebar, click the **gear icon** (that's Project Settings — the label isn't shown).
-6. Check **"Show `appsscript.json` manifest file in editor"**.
-7. Click the **`<>` (Editor)** icon in the left sidebar to get back to the code.
-8. Click `appsscript.json` in the Files list.
-9. Select everything and replace it with the contents of
-   [`appsscript.json` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/appsscript.json).
-   If your digest should arrive on a different clock, change `timeZone` to your
-   [IANA time zone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-10. Press `⌘S`/`Ctrl+S` to save.
-11. In the Files list, hover over `Code.gs` and click the **⋮** (three-dot) menu that appears.
-12. Choose **Rename**.
-13. Type `Config` — no extension — and press **Enter**. (Every new project starts with a file
-    called `Code.gs`; renaming it keeps your files matching this repo one-to-one.)
-14. Select everything in it and replace it with the contents of
-    [`Config.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/Config.js).
-15. Save (`⌘S`/`Ctrl+S`).
-16. Click the **＋** next to "Files".
-17. Choose **Script**.
-18. Type `Setup` as the name — just `Setup`, no extension. (The editor adds `.gs` itself; typing
-    `Setup.js` gets you a messy `Setup.js.gs`.)
-19. Paste in the contents of
-    [`Setup.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/Setup.js).
-20. Save (`⌘S`/`Ctrl+S`).
-21. Click the **＋** next to "Files".
-22. Choose **Script**.
-23. Type `Screener` as the name — no extension.
-24. Paste in the contents of
-    [`Screener.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/Screener.js).
-25. Save (`⌘S`/`Ctrl+S`).
-26. Click the **＋** next to "Files".
-27. Choose **Script**.
-28. Type `Digest` as the name — no extension.
-29. Paste in the contents of
-    [`Digest.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/Digest.js).
-30. Save (`⌘S`/`Ctrl+S`).
-31. Click the **＋** next to "Files".
-32. Choose **Script**.
-33. Type `WebApp` as the name — no extension.
-34. Paste in the contents of
-    [`WebApp.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/WebApp.js).
-35. Save (`⌘S`/`Ctrl+S`).
-36. Click the **＋** next to "Files".
-37. Choose **Script**.
-38. Type `AddOn` as the name — no extension.
-39. Paste in the contents of
-    [`AddOn.js` (raw)](https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/src/AddOn.js).
-40. Save (`⌘S`/`Ctrl+S`).
-41. Click `Setup.gs` in the Files list. (The toolbar's function dropdown only lists functions
-    from the file that's currently open — and only once it's saved.)
-42. In the toolbar, open the function dropdown (next to **Debug**), choose **`setup`**, and click
-    **Run**.
-43. Authorize when asked. You'll see **"Google hasn't verified this app"** — click
-    **Advanced → Go to Gscreener (unsafe)**. "Unsafe" only means Google didn't audit it: the
-    code is this repo, running under your own account, visible to no one else.
-44. Grant the Gmail permissions. The script asks for the minimum it needs: modify labels
-    (`gmail.modify`), manage filters (`gmail.settings.basic`), manage its own triggers, and run
-    as a Gmail add-on (the [side panel](#the-gmail-side-panel)).
-45. Click **Deploy** (top right).
-46. Click **New deployment**.
-47. Click the gear next to "Select type" and choose **Web app**.
-48. In the **Description** box, type `Gscreener dashboard`. (It's just a label for this
-    deployment — it has no effect on behavior.)
-49. *Execute as:* should already show **Me (your email)** — leave it.
-50. Set *Who has access:* to **Only myself**.
-51. Click **Deploy**.
-52. Copy the web app URL and bookmark it — that's your screening dashboard, and the digest's
-    👍/👎 buttons go through it too.
+The payoff: open a held email in Gmail and the **Gscreener card** in the right-hand side panel
+shows the sender's status with the same 👍 Approve / 👎 Reject buttons, so you can
+decide while reading. Opening it with no email selected lists everyone awaiting review, and it
+works in the Gmail mobile apps too. (Buttons can't go in the email body — Gmail messages are
+immutable once delivered — so a side-panel card is as close as Gmail allows.)
 
-That's it. Screening starts immediately: new senders pile up in `Gscreener/Pending`, your digest
-arrives daily at 8am (change `DIGEST_HOUR` in `Config.js`), and the dashboard is at the web app URL.
+1. Open [script.google.com](https://script.google.com) and click your **Gscreener** project.
+2. Click **Deploy** (top right), then **Test deployments**.
+3. In the dialog, click **Install**, then **Done**.
+4. Reload your Gmail tab, open any email, and click the **Gscreener icon** in the right-hand side
+   panel (just below **Contacts**, just above the **+**).
+5. The first time only: click **Authorize access** in the panel and approve.
 
 ## How to use it
 
@@ -238,29 +176,9 @@ When code in this repo changes and you want it on your install:
   approved/rejected sender lists, where you can add or remove senders directly. Each pending
   sender's name links to their held mail in Gmail so you can read before deciding.
 - **Gmail side panel** — read a held email in Gmail and approve/reject its sender right next to
-  it; see [The Gmail side panel](#the-gmail-side-panel).
+  it; see [Making Gmail side panel work](#making-gmail-side-panel-work).
 - **From the editor** — `approveSender('a@b.com')`, `rejectSender('a@b.com')`,
   `addExemption('keywords', 'login code')`, or re-run `setup()` to repair labels/filter/triggers.
-
-## The Gmail side panel
-
-The fastest workflow is deciding while reading: open a held email in Gmail and the **Gscreener
-card** in the right-hand side panel shows the sender's status with the same 👍 Approve /
-👎 Reject buttons. Opening the add-on with no email selected shows a home card listing everyone
-awaiting review. It works in the Gmail mobile apps too.
-
-(Buttons can't be injected into the email body itself — Gmail messages are immutable once
-delivered — so a side-panel card is as close as Gmail allows.)
-
-To enable it, after all files (including `appsscript.json` and `AddOn`) are in place and
-`setup()` has been run:
-
-1. Click **Deploy** (top right).
-2. Click **Test deployments**.
-3. In the dialog, click **Install**, then **Done**.
-4. Reload your Gmail tab.
-5. Open any email and click the **Gscreener icon** in the right-hand side panel.
-6. The first time only: click **Authorize access** in the panel and approve.
 
 ## Exemptions
 
