@@ -96,13 +96,18 @@ actually *control a browser*:
 Once it can see your browser, paste this:
 
 > Install Gscreener for me by following the "Install manually" steps in the README at
-> https://github.com/neerajsingh0101/gscreener. Do all the clicking and pasting yourself.
-> Two things need me: when Google asks me to sign in, and when the "Gscreener wants access"
-> permission screen appears — pause and let me handle those, then keep going. When you're done,
-> tell me my dashboard URL and confirm the side panel is installed.
+> https://github.com/neerajsingh0101/gscreener, up to and including deploying the web app. Do
+> all the clicking and pasting yourself. Two moments need me: when Google asks me to sign in,
+> and when the "Gscreener wants access" permission screen appears — pause and let me handle
+> those, then keep going. Do not install the Gmail side panel yourself. When you're finished,
+> show me my dashboard URL, then print the one step left for me to do by hand — turning on the
+> side panel — and link me to
+> https://github.com/neerajsingh0101/gscreener#the-gmail-side-panel.
 
-You'll be needed exactly twice — the Google sign-in and the permission approval (the agent can't
-and shouldn't know your password or grant Gmail access for you). It handles everything else.
+You'll be needed at two moments during the install — the Google sign-in and the permission
+approval (the agent can't and shouldn't know your password or grant Gmail access for you) — and
+once more at the very end, for a single quick step the agent hands you a link for: turning on the
+[side panel](#the-gmail-side-panel). The agent does everything else.
 
 ### Install manually
 
@@ -239,8 +244,8 @@ When code in this repo changes and you want it on your install:
 
 ## The Gmail side panel
 
-The fastest workflow is deciding while reading: open a held email in Gmail and the **Gmail
-Screener card** in the right-hand side panel shows the sender's status with the same 👍 Approve /
+The fastest workflow is deciding while reading: open a held email in Gmail and the **Gscreener
+card** in the right-hand side panel shows the sender's status with the same 👍 Approve /
 👎 Reject buttons. Opening the add-on with no email selected shows a home card listing everyone
 awaiting review. It works in the Gmail mobile apps too.
 
