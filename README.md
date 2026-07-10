@@ -98,7 +98,7 @@ A normal chat at [claude.ai](http://claude.ai) or [chatgpt.com](http://chatgpt.c
 Give your agent the following prompt.
 
 > Install Gscreener by following the steps at
-> https://github.com/neerajsingh0101/gscreener/blob/main/docs/installation-steps.md
+> https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/docs/installation-steps.md
 >
 > Complete all steps through deploying the web app. Do the clicking and pasting yourself.
 > 
