@@ -107,9 +107,16 @@ function ensureTriggers() {
   ScriptApp.newTrigger('sendDigest').timeBased().atHour(DIGEST_HOUR).everyDays(1).create();
 }
 
-// Turns screening off: removes the filter and triggers and releases all held
-// (pending) mail back to the inbox. Labels, rejected mail and your
-// approve/reject lists are kept so nothing is lost.
+// Turns screening off without touching your mail. Deletes the time-based
+// triggers and the catch-all Gmail filter, so new mail flows straight to your
+// inbox again and nothing new is held in Triage. The three Gscreener labels,
+// every email already under them, and your approve/reject lists are all left
+// exactly as they are.
+//
+// Run this BEFORE deleting the Apps Script project. The filter is a Gmail-level
+// object that outlives the project, so a project deleted while the filter still
+// exists would keep pulling every new email into the hidden Triage label with
+// nothing left to sort it.
 function uninstall() {
   ScriptApp.getProjectTriggers().forEach(function (trigger) {
     ScriptApp.deleteTrigger(trigger);
@@ -122,14 +129,7 @@ function uninstall() {
     }
   });
 
-  releaseAllHeldMail();
-  Logger.log('Uninstalled: filter and triggers removed, held mail released to the inbox.');
-  Logger.log('Labels and sender verdicts were kept. Delete the %s labels and Script Properties for a clean slate.', 'Gscreener');
-}
-
-function releaseAllHeldMail() {
-  [getConfig('labelTriage'), getConfig('labelPending')].forEach(function (labelId) {
-    if (!labelId) return;
-    batchMove(listMessageIds({ labelIds: [labelId] }), ['INBOX'], [labelId]);
-  });
+  Logger.log('Uninstalled: triggers and the catch-all filter removed. New mail now goes straight to your inbox.');
+  Logger.log('Kept as-is: the Gscreener labels, every email under them, and your approve/reject lists.');
+  Logger.log('Next: delete this Apps Script project, then revoke access at myaccount.google.com/connections.');
 }
