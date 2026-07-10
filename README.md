@@ -78,15 +78,22 @@ Installation has two steps:
 The [checklist](docs/installation-steps.md) is long, but you don't have to work through
 it yourself — an AI agent that can control a browser can do it for you.
 
+
+#### AI needs your input in signing in and approving the permission request
+
 You only need to help the AI agent when Google asks you to:
 * Sign in.
 * Approve the requested permissions.
+
+#### Not all AI agents can control browser
 
 A normal chat at [claude.ai](http://claude.ai) or [chatgpt.com](http://chatgpt.com) cannot complete the installation because it cannot control your browser. Use one of these instead:
 
 * Claude Code or Codex: Both can control a browser and complete the installation.
 * Claude in Chrome: A Chrome extension available with paid Claude plans. Install it from [claude.com/claude-for-chrome](https://claude.com/claude-for-chrome).
 * ChatGPT agent mode: Available in supported ChatGPT plans. See [ChatGPT agent](https://chatgpt.com/features/agent/).
+
+#### The prompt you need to provide
 
 Give your agent the following prompt.
 
