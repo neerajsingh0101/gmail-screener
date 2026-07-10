@@ -2,7 +2,7 @@
 
 Gscreener brings HEY-style [email screening](https://www.hey.com/features/the-screener) to Gmail.
 
-Anyone can send you an email, which makes it easy for spam and unwanted messages to reach your inbox. HEY⁠￼ solves this with its Screener. 
+Anyone can send you an email, which makes it easy for spam and unwanted messages to reach your inbox. HEY solves this with its Screener. 
 I liked the idea, but I wanted to keep using Gmail and Google Workspace, so I built Gscreener.
 
 Gscreener is free and runs entirely inside your Google account. There are no servers, subscriptions, or third-party services. 
@@ -75,8 +75,8 @@ Installation has two steps:
 
 ### Step 1: Let the AI agent install Gscreener
 
-The [checklist](docs/installation-steps.md) of items to be done is long.
-But AI agent can help. An AI agent that can control a browser can do the work.
+The [checklist](docs/installation-steps.md) is long, but you don't have to work through
+it yourself — an AI agent that can control a browser can do it for you.
 
 You only need to help the AI agent when Google asks you to:
 * Sign in.
@@ -85,8 +85,8 @@ You only need to help the AI agent when Google asks you to:
 A normal chat at [claude.ai](http://claude.ai) or [chatgpt.com](http://chatgpt.com) cannot complete the installation because it cannot control your browser. Use one of these instead:
 
 * Claude Code or Codex: Both can control a browser and complete the installation.
-* Claude in Chrome: A Chrome extension available with paid Claude plans. Install it from [claude.com/claude-for-chrome⁠](https://claude.com/claude-for-chrome)￼.
-* ChatGPT agent mode: Available in supported ChatGPT plans. See [ChatGPT agent](https://chatgpt.com/features/agent/)⁠￼.
+* Claude in Chrome: A Chrome extension available with paid Claude plans. Install it from [claude.com/claude-for-chrome](https://claude.com/claude-for-chrome).
+* ChatGPT agent mode: Available in supported ChatGPT plans. See [ChatGPT agent](https://chatgpt.com/features/agent/).
 
 Give your agent the following prompt.
 
@@ -150,7 +150,7 @@ You do not need to check the Pending label every day. Gscreener sends a daily di
 
 To install changes from this repository:
 
-1. Open your project at [script.google.com](https://script.google.com)⁠￼.
+1. Open your project at [script.google.com](https://script.google.com).
 2. Open each file that changed.
 3. Replace its contents with the latest version from this repository.
 4. Save the file using ⌘S on macOS or Ctrl+S on Windows and Linux.
