@@ -25,8 +25,6 @@ Gscreener sends you a daily digest of emails waiting for review. You can also ma
 
 <img width="253" height="121" alt="CleanShot 2026-07-10 at 01 03 35" src="https://github.com/user-attachments/assets/2a57c07a-b644-4b33-8032-902e2599b2a4" />
 
-
-
 ## Contents
 
 - [Cost](#cost)
@@ -45,26 +43,27 @@ Gscreener sends you a daily digest of emails waiting for review. You can also ma
 
 ## Cost
 
-Zero — always. Everything runs as a Google Apps Script inside your own Google account: there is
-no server to rent, no third-party service, and no subscription. Google's free Apps Script quotas
-comfortably cover a personal mailbox, so deploying and running this whole operation costs
-nothing.
+Gscreener is free.
+
+It runs as a Google Apps Script inside your Google account. There is no server, third-party service, or subscription.
+
+Google’s free Apps Script limits are enough for a normal personal mailbox.
 
 ## Security
 
-Every line of this project is open source, so you can review exactly what the code does before
-running it. You also deploy it yourself, into your own Google Apps Script environment — your mail
-and your sender lists never leave your Google account, and no third party is involved.
+Gscreener is open source, so you can review the code before installing it.
 
-Having said that, a fair warning: software can always have vulnerabilities. If you notice any
-security-related issue, please contact [me](https://github.com/neerajsingh0101).
+You deploy it inside your own Google Apps Script account. Your emails and sender lists stay inside your Google account.
+
+No software is completely free of security risks. If you find a security issue, please contact [me](https://github.com/neerajsingh0101).
 
 ## No AI
 
-You will be disappointed to know that this tool does not need AI to do its job. It does its job the
-old-fashioned way: it keeps a list of the emails you have approved and the ones you have rejected,
-and it checks every incoming email against that list. Nothing reads your mail, and nothing is sent
-anywhere to be analyzed.
+Gscreener does not use AI.
+
+It keeps a list of approved and rejected email addresses and checks incoming emails against those lists.
+
+Nothing analyzes the contents of your emails, and nothing is sent to an external service.
 
 ## Installation by an AI agent
 
