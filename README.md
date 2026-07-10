@@ -32,6 +32,7 @@ People you write to are approved automatically.
 
 - [Cost](#cost)
 - [Security](#security)
+- [No AI](#no-ai)
 - [Installation steps](#installation-steps)
   - [Installation by an AI agent](#installation-by-an-ai-agent)
   - [Install manually](#install-manually)
@@ -60,6 +61,13 @@ and your sender lists never leave your Google account, and no third party is inv
 
 Having said that, a fair warning: software can always have vulnerabilities. If you notice any
 security-related issue, please contact [me](https://github.com/neerajsingh0101).
+
+## No AI
+
+You will be disappointed to know that this tool does not need AI to do its job. It does its job the
+old-fashioned way: it keeps a list of the emails you have approved and the ones you have rejected,
+and it checks every incoming email against that list. Nothing reads your mail, and nothing is sent
+anywhere to be analyzed.
 
 ## Installation steps
 
