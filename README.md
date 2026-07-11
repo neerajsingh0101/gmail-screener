@@ -55,7 +55,16 @@ Gscreener is open source, so you can review the code before installing it.
 
 You deploy it inside your own Google Apps Script account. Your emails and sender lists stay inside your Google account.
 
-Gscreener only reads the message headers it needs, including From, To, and Subject. It does not send your email anywhere.
+Gscreener only reads the headers it needs — From, To, and Subject — to decide who sent each message. It never reads the body of your emails. The only email it ever sends is your own daily digest, delivered to you. Nothing is sent to me or any outside service.
+
+### Why the permission screen looks broad
+
+When you approve Gscreener, Google shows a broad-sounding consent screen. Google offers only a few coarse permission levels, so the wording covers more than Gscreener actually does. Here is what each one is for:
+
+* **"Read, compose, and send email."** Gscreener reads the From, To, and Subject headers, moves messages between your inbox and its labels, and sends you your daily digest. It never emails anyone but you. This level also cannot permanently delete mail — that needs a broader permission Gscreener deliberately does not request — which is why nothing is ever erased.
+* **"Change your mail settings and filters."** Gscreener creates the single catch-all filter that pulls new mail out of your inbox for screening, and removes that filter when you uninstall. It changes nothing else.
+* **Manage Apps Script triggers.** Runs the once-a-minute sorting pass and sends the daily digest on schedule.
+* **Gmail add-on.** Draws the Approve/Reject card while you read a message. It sees only that message's metadata.
 
 No software is completely free of security risks. If you find a security issue, please contact [me](https://github.com/neerajsingh0101).
 
@@ -85,7 +94,7 @@ it yourself — an AI agent that can control a browser can do it for you.
 
 You only need to help the AI agent when Google asks you to:
 * Sign in.
-* Approve the requested permissions.
+* Approve the requested permissions. If the consent screen looks broader than you expect, see [why the permission screen looks broad](#why-the-permission-screen-looks-broad).
 
 #### Not all AI agents can control browser
 
