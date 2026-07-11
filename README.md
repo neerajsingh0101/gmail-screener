@@ -87,7 +87,8 @@ Installation has two steps:
 ### Step 1: Let the AI agent install Gscreener
 
 The [checklist](docs/installation-steps.md) is long, but you don't have to work through
-it yourself — an AI agent that can control a browser can do it for you.
+it yourself. An AI agent that can control a browser does it for you: it opens Apps Script,
+creates the project, copies in the files, runs the setup, and deploys the dashboard.
 
 
 #### AI needs your input in signing in and approving the permission request
