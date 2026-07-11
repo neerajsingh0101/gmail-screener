@@ -4,8 +4,6 @@ These are the detailed, click-by-click steps to install Gscreener. They're writt
 can do them for you — see [Installation by an AI agent](../README.md#installation-by-an-ai-agent)
 in the README — but you can follow them by hand too.
 
-When you finish here, turn on the side panel:
-[Making Gmail side panel work](../README.md#making-gmail-side-panel-work).
 
 One action per step. Code links open the **raw** file, so `⌘A`/`Ctrl+A` selects exactly what you
 need to copy.
