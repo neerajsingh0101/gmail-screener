@@ -76,6 +76,9 @@ function renderDashboard(notice) {
   const url = webAppUrl();
   const senders = pendingSenders();
   const verdicts = allVerdicts();
+  // Prefer the value setup() stored (always current, since setup is re-run on
+  // every update) over the constant baked into this pinned deployment.
+  const version = getConfig('version') || VERSION;
 
   return (
     '<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">' +
@@ -91,7 +94,7 @@ function renderDashboard(notice) {
     '</head><body><div class="page"><div class="column">' +
     '<header class="masthead">' +
     '<img class="logo" src="https://raw.githubusercontent.com/neerajsingh0101/gscreener/main/assets/icon.png" alt="">' +
-    '<div><h1>Gscreener Dashboard</h1>' +
+    '<div><h1>Gscreener Dashboard <span class="ver">v' + escapeHtml(version) + '</span></h1>' +
     '<p class="tagline">Manage what reaches your inbox</p></div></header>' +
     (notice ? '<div class="notice">' + escapeHtml(notice) + '</div>' : '') +
     pendingCard(url, senders) +
@@ -115,6 +118,7 @@ function dashboardCss() {
     '.masthead{display:flex;align-items:center;gap:14px;margin-bottom:40px}' +
     '.masthead .logo{width:40px;height:40px;border-radius:9px;flex-shrink:0}' +
     '.masthead h1{font-size:22px;font-weight:700;letter-spacing:-0.02em;color:oklch(0.25 0.01 60);line-height:1.1;margin:0}' +
+    '.masthead .ver{font-size:12px;font-weight:600;letter-spacing:normal;color:oklch(0.55 0.01 60);background:oklch(0.94 0.004 75);border-radius:999px;padding:2px 8px;vertical-align:middle;white-space:nowrap}' +
     '.tagline{font-size:14px;color:oklch(0.55 0.01 60);margin:4px 0 0}' +
     '.card{background:#fff;border:1px solid oklch(0.92 0.004 75);border-radius:14px;padding:24px;margin-bottom:20px;box-shadow:0 1px 2px rgba(30,25,20,0.04)}' +
     '.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}' +

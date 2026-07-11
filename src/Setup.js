@@ -15,6 +15,7 @@ function setup() {
   ensureDefaultExemptions();
   migrateEmailExemptionsToApproved();
   setConfig('lastSentScan', String(Math.floor(Date.now() / 1000)));
+  setConfig('version', VERSION);
 
   Logger.log('Gscreener installed for %s.', self);
   Logger.log('From now on, mail from unknown senders is held under %s.', LABELS.pending);
