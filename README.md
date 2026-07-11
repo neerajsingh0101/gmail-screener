@@ -135,7 +135,7 @@ To enable the Gmail side panel:
 6. Reload Gmail.
 7. Open any email.
 8. Click the **Gscreener** icon in the right-hand side panel. It appears below **Contacts** and above the + icon.
-9. The first time you open it, click **Authorize access** and approve the request.
+9. The first time you open it, click **Grant permission** and approve the request.
     
 ## How to use Gscreener
 
