@@ -120,6 +120,8 @@ Give your agent the following prompt.
 >
 > When you finish, show me the dashboard URL. Then show me how to enable the Gmail side panel using:
 > https://github.com/neerajsingh0101/gscreener#step-2-enable-the-gmail-side-panel
+>
+> Open Chrome browser and use chrome-devtools MCP. Ask me to login.
 
 
 ### Step 2: Enable the Gmail side panel
